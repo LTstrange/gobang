@@ -86,14 +86,16 @@ int gobang::getWhichPerson() {
 }
 
 extern "C" {
-int func() {
-    int res = 0;
-    for (int i = 0; i < 100; ++i) {
-        for (int j = 0; j < 100; ++j) {
-            res++;
-        }
-    }
-    return res;
+
+gobang env;
+
+void showBoard(){
+    env.showBoard();
 }
+
+int nextStep(int whichPerson, int location[2]){
+    return env.nextStep(whichPerson, location);
+}
+
 }
 
