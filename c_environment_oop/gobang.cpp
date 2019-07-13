@@ -1,10 +1,7 @@
-#include <iostream>
-#include <vector>
+#include "gobang.h"
 
-using namespace std;
-
-void showBoard(vector<vector<int>> board){
-    for (vector<int> i : board) {
+void gobang::showBoard() {
+    for (vector<int> i : this->board) {
         for (int j : i) {
             cout << j << ' ';
         }
@@ -12,7 +9,7 @@ void showBoard(vector<vector<int>> board){
     }
 }
 
-int jugingWinOrLose(vector<vector<int>> board, int x, int y) {
+int gobang::jugingWinOrLose(int x, int y) {
     int i, j, k;
     const int step[4][2] = {{1, 0},
                             {0, 1},
@@ -25,8 +22,8 @@ int jugingWinOrLose(vector<vector<int>> board, int x, int y) {
             for (k = 1; k <= 4; ++k) {
                 int row = x + k*d[j]*step[i][0];
                 int col = y + k*d[j]*step[i][1];
-                if (row >= 0 && row < 15 && col >= 0 && col < 15 &&
-                    board[x][y] == board[row][col]) {
+                if (row >= 0 && row < this->size && col >= 0 && col < this->size &&
+                    this->board[x][y] == this->board[row][col]) {
                     count ++;
                 } else {
                     break;
@@ -40,35 +37,15 @@ int jugingWinOrLose(vector<vector<int>> board, int x, int y) {
     return 0;
 }
 
-int getWhichPerson(vector<vector<int>> board) {
-    int res = 0;
-    for (vector<int> row : board) {
-        for (int i : row) {
-            res ^= i;
-        }
-    }
-    switch (res) {
-        case 0:
-        case 3:
-            return 1;
-        case 1:
-        case 2:
-            return 2;
-        default:
-            cout << "ERROR" << endl;
-            return 0;
-    }
-}
-
-int nextStep(vector<vector<int>> board, int whichPerson, int location[2]) {
-    if (whichPerson == getWhichPerson(board)) {
-        if (board[location[0]][location[1]] == 0)
-            board[location[0]][location[1]] = whichPerson;
+int gobang::nextStep(int whichPerson, int location[2]) {
+    if (whichPerson == this->getWhichPerson()) {
+        if (this->board[location[0]][location[1]] == 0)
+            this->board[location[0]][location[1]] = whichPerson;
         else {
             cout<<"落子冲突"<<endl;
             return -1;
         }
-        if (jugingWinOrLose(board, location[0], location[1])) {
+        if (this->jugingWinOrLose(location[0], location[1])) {
             cout<<"YOU WIN!"<<endl;
             switch (whichPerson) {
                 case 1:
@@ -87,3 +64,38 @@ int nextStep(vector<vector<int>> board, int whichPerson, int location[2]) {
     cout<<"wrong person!"<<endl;
     return -1;
 }
+
+int gobang::getWhichPerson() {
+    int res = 0;
+    for (vector<int> row : this->board) {
+        for (int i : row) {
+            res ^= i;
+        }
+    }
+    switch (res) {
+        case 0:
+        case 3:
+            return 1;
+        case 1:
+        case 2:
+            return 2;
+        default:
+            cout << "ERROR" << endl;
+            return 0;
+    }
+}
+
+extern "C" {
+
+gobang env;
+
+void showBoard(){
+    env.showBoard();
+}
+
+int nextStep(int whichPerson, int location[2]){
+    return env.nextStep(whichPerson, location);
+}
+
+}
+

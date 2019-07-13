@@ -1,6 +1,9 @@
-/c_environment/cmake-build-debug
-/c_environment/CMakeLists.txt
-/c_environment/.idea
+/c_environment_oop/cmake-build-debug
+/c_environment_oop/CMakeLists.txt
+/c_environment_oop/.idea
 /python_algorithm/venv
 /python_algorithm/.idea
 
+/c_environment/cmake-build-debug
+/c_environment/CMakeLists.txt
+/c_environment/.idea
