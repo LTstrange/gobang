@@ -4,19 +4,15 @@
 using namespace std;
 
 int main() {
-    vector<vector<int>> board(15, vector<int>(15, 0));
-
-
+    board_type board(15, vector<int>(15, 0));
 
     int location[2] = {7, 7};
 
-    for (int i = 0; i < 9; ++i) {
-        nextStep(board, i % 2 + 1, location);
-        location[i % 2]++;
-    }
+    nextStep(board, 1, location);
 
 
-    showBoard(board);
+    cout<<alphaBeta(2, board, -2, 2, 0);
+
 
 
     return 0;

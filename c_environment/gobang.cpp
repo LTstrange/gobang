@@ -1,9 +1,15 @@
+
+#ifndef C_ENVIRONMENT_GOBANG_CPP
+#define C_ENVIRONMENT_GOBANG_CPP
+
 #include <iostream>
 #include <vector>
 
+#define board_type vector<vector<int>>
+
 using namespace std;
 
-void showBoard(vector<vector<int>> board) {
+void showBoard(board_type board) {
     for (vector<int> i : board) {
         for (int j : i) {
             cout << j << ' ';
@@ -12,7 +18,7 @@ void showBoard(vector<vector<int>> board) {
     }
 }
 
-int jugingWinOrLose(vector<vector<int>> board, int x, int y) {
+int judgingWinOrLose(board_type board, int x, int y) {
     // 判断是否是平局，检查是否有空位
     bool haveZero = false;
     for (vector<int> row : board) {
@@ -59,7 +65,7 @@ int jugingWinOrLose(vector<vector<int>> board, int x, int y) {
     return 0;
 }
 
-int getWhichPerson(vector<vector<int>> board) {
+int getWhichPerson(board_type board) {
     int res = 0;
     for (vector<int> row : board) {
         for (int i : row) {
@@ -79,7 +85,7 @@ int getWhichPerson(vector<vector<int>> board) {
     }
 }
 
-int nextStep(vector<vector<int>> &board, int whichPerson, int location[2]) {
+int nextStep(board_type &board, int whichPerson, int location[2]) {
     if (location[0] > 14 || location[0] < 0 || location[1] > 14 || location[1] < 0) {
         cout << "落子超出范围" << endl;
         return -1;
@@ -92,27 +98,15 @@ int nextStep(vector<vector<int>> &board, int whichPerson, int location[2]) {
             return -1;
         }
 
-        int state = jugingWinOrLose(board, location[0], location[1]);
+        int state = judgingWinOrLose(board, location[0], location[1]);
         switch (state) {
             case 1: {
-                cout << "YOU WIN!" << endl;
-                switch (whichPerson) {
-                    case 1:
-                        cout << "执黑获胜" << endl;
-                        break;
-                    case 2:
-                        cout << "执白获胜" << endl;
-                        break;
-                    default:
-                        break;
-                }
                 return 1;
             }
             case 0:
                 // 比赛未结束
                 return 0;
             case 2: {
-                cout << "棋盘下满，平局" << endl;
                 return 2;
             }
         }
@@ -121,3 +115,11 @@ int nextStep(vector<vector<int>> &board, int whichPerson, int location[2]) {
     return -1;
 }
 
+
+extern "C" {
+int func(){
+    return 1;
+}
+}
+
+#endif //C_ENVIRONMENT_GOBANG_CPP
