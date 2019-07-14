@@ -7,7 +7,6 @@ int main() {
     vector<vector<int>> board(15, vector<int>(15, 0));
 
 
-    showBoard(board);
 
     int location[2] = {7, 7};
 
