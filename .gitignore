@@ -7,3 +7,4 @@
 /c_environment/cmake-build-debug
 /c_environment/CMakeLists.txt
 /c_environment/.idea
+python_algorithm/__pycache__/
