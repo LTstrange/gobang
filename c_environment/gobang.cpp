@@ -101,13 +101,13 @@ int nextStep(board_type &board, int whichPerson, int location[2]) {
         int state = judgingWinOrLose(board, location[0], location[1]);
         switch (state) {
             case 1: {
-                return 1;
+                return 1;  // 胜利
             }
             case 0:
                 // 比赛未结束
                 return 0;
             case 2: {
-                return 2;
+                return 2;  // 平局
             }
         }
     }
@@ -124,19 +124,27 @@ int B_PYtoB_C(int board_PY[15 * 15], board_type &board) {
     return 0;
 }
 
+int B_CtoB_PY(int board_PY[15 * 15], board_type board){
+    for (int i = 0; i < 15; ++i) {
+        for (int j = 0; j < 15; ++j) {
+            board_PY[15 * i + j] = board[i][j];
+        }
+    }
+}
+
 extern "C" {
 int show_board(int board_PY[15 * 15]) {
-    cout<<board_PY[0]<<endl;
-    board_type board;
+    board_type board(15, vector<int>(15, 0));
     B_PYtoB_C(board_PY, board);
     showBoard(board);
     return 0;
 }
 
 int next_step(int board_PY[15 * 15], int whichPerson, int location[2]) {
-    board_type board;
+    board_type board(15, vector<int>(15, 0));
     B_PYtoB_C(board_PY, board);
     int r_type = nextStep(board, whichPerson, location);
+    B_CtoB_PY(board_PY, board);
     return r_type;
 }
 int func() {
