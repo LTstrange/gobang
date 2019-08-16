@@ -7,3 +7,5 @@
 在棋盘中，0为空，1为黑子，2为白子。15 × 15的棋盘。
 算法主体使用alpha-beta剪枝。Python算法处使用深度学习进行优化。
 参照alphago，计划使用两个网络（value-net和policy-net）。
+
+封装命令：g++ -fPIC -shared gobang.cpp -o libgobang.so
