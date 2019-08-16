@@ -18,7 +18,7 @@ void showBoard(board_type board) {
     }
 }
 
-int judgingWinOrLose(board_type board, int x, int y) {
+int judgingWinOrLose(board_type board, int x, int y) {  // 无需打包
     // 判断是否是平局，检查是否有空位
     bool haveZero = false;
     for (vector<int> row : board) {
@@ -65,7 +65,7 @@ int judgingWinOrLose(board_type board, int x, int y) {
     return 0;
 }
 
-int getWhichPerson(board_type board) {
+int getWhichPerson(board_type board) {  // 无需打包
     int res = 0;
     for (vector<int> row : board) {
         for (int i : row) {
@@ -115,9 +115,31 @@ int nextStep(board_type &board, int whichPerson, int location[2]) {
     return -1;
 }
 
+int B_PYtoB_C(int board_PY[15 * 15], board_type &board) {
+    for (int i = 0; i < 15; ++i) {
+        for (int j = 0; j < 15; ++j) {
+            board[i][j] = board_PY[0];
+        }
+    }
+    return 0;
+}
 
 extern "C" {
-int func(){
+int show_board(int board_PY[15 * 15]) {
+    cout<<board_PY[0]<<endl;
+    board_type board;
+    B_PYtoB_C(board_PY, board);
+    showBoard(board);
+    return 0;
+}
+
+int next_step(int board_PY[15 * 15], int whichPerson, int location[2]) {
+    board_type board;
+    B_PYtoB_C(board_PY, board);
+    int r_type = nextStep(board, whichPerson, location);
+    return r_type;
+}
+int func() {
     return 1;
 }
 }
