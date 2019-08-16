@@ -4,16 +4,10 @@
 using namespace std;
 
 int main() {
+    int b[15 * 15]={2};
     board_type board(15, vector<int>(15, 0));
-
-    int location[2] = {7, 7};
-
-    nextStep(board, 1, location);
-
-
-    cout<<alphaBeta(2, board, -2, 2, 0);
-
-
+    B_PYtoB_C(b, board);
+    showBoard(board);
 
     return 0;
 }
