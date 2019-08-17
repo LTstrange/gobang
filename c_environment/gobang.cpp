@@ -9,8 +9,8 @@
 
 using namespace std;
 
-void showBoard(board_type board) {
-    for (vector<int> i : board) {
+void showBoard(const board_type& board) {
+    for (const vector<int>& i : board) {
         for (int j : i) {
             cout << j << ' ';
         }
@@ -21,7 +21,7 @@ void showBoard(board_type board) {
 int judgingWinOrLose(board_type board, int x, int y) {  // 无需打包
     // 判断是否是平局，检查是否有空位
     bool haveZero = false;
-    for (vector<int> row : board) {
+    for (const vector<int>& row : board) {
         for (int i : row) {
             if (i == 0) {
                 haveZero = true;
@@ -65,9 +65,9 @@ int judgingWinOrLose(board_type board, int x, int y) {  // 无需打包
     return 0;
 }
 
-int getWhichPerson(board_type board) {  // 无需打包
+int getWhichPerson(const board_type& board) {  // 无需打包
     int res = 0;
-    for (vector<int> row : board) {
+    for (const vector<int>& row : board) {
         for (int i : row) {
             res ^= i;
         }
@@ -109,22 +109,25 @@ int nextStep(board_type &board, int whichPerson, int location[2]) {
             case 2: {
                 return 2;  // 平局
             }
+            default:
+                cout<<"无效返回值"<<endl;  // 对函数出错的预防
+                return -1;
         }
     }
     cout << "wrong person!" << endl;
     return -1;
 }
 
-int B_PYtoB_C(int board_PY[15 * 15], board_type &board) {
+int B_PYtoB_C(const int board_PY[15 * 15], board_type &board) {
     for (int i = 0; i < 15; ++i) {
         for (int j = 0; j < 15; ++j) {
-            board[i][j] = board_PY[0];
+            board[i][j] = board_PY[15 * i + j];
         }
     }
     return 0;
 }
 
-int B_CtoB_PY(int board_PY[15 * 15], board_type board){
+int B_CtoB_PY(int board_PY[15 * 15], board_type board) {
     for (int i = 0; i < 15; ++i) {
         for (int j = 0; j < 15; ++j) {
             board_PY[15 * i + j] = board[i][j];
