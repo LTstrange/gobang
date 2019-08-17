@@ -13,7 +13,7 @@ def nextStep(board, whichPerson, location):
              2 : it ends in a draw
     :param board: ndarray(15 * 15)
     :param whichPerson: int
-    :param location: list(2)
+    :param location: ndarray(2)
     :return: int, ndarray(15 * 15)
     """
     next_step = lib.next_step
